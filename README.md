@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+HEAD
 # MasjidKita: Ekosistem Masjid Hiperlokal
 
 Aplikasi **MasjidKita** dirancang khusus untuk menghubungkan Pengurus DKM (Dewan Kemakmuran Masjid) dan Warga Kompleks Perumahan/Desa dalam satu ekosistem tertutup. Aplikasi ini berfokus pada transparansi finansial masjid dan pemberdayaan ekonomi warga dengan landasan Syariah.
