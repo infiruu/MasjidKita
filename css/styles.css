@@ -1,0 +1,883 @@
+/* Stylesheet Utama MasjidKita */
+/* Desain Modern, Premium, & Sangat Interaktif (Tema Hijau Islami & Abu-Abu Profesional) */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+    /* Palet Warna Premium HSL/HEX */
+    --primary: #059669; /* Emerald Green */
+    --primary-light: #34d399;
+    --primary-dark: #065f46;
+    --accent: #10B981;
+    --bg-main: #0f172a; /* Slate Dark untuk frame luar desktop */
+    --bg-phone: #f8fafc; /* Latar belakang aplikasi (Abu-abu terang bersih) */
+    --text-dark: #1e293b; /* Warna teks utama */
+    --text-muted: #64748b; /* Warna teks sekunder */
+    --card-bg: #ffffff; /* Latar belakang card */
+    --border-color: #e2e8f0;
+    --error: #ef4444;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--bg-main);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: var(--text-dark);
+}
+
+/* Container Frame Smartphone (Sangat Premium untuk Tampilan Desktop) */
+.phone-container {
+    width: 100%;
+    max-width: 420px; /* Ukuran standard smartphone */
+    height: 90vh;
+    max-height: 850px;
+    background-color: var(--bg-phone);
+    border-radius: 40px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(255, 255, 255, 0.05);
+    border: 12px solid #334155; /* Bezel Handphone */
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Indikator Kamera Depan (Notch) */
+.phone-notch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 24px;
+    background-color: #334155;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    z-index: 100;
+}
+
+/* Untuk Tampilan Seluler Asli (Hilangkan Bezel di Layar Kecil) */
+@media (max-width: 480px) {
+    body {
+        background-color: var(--bg-phone);
+    }
+    .phone-container {
+        max-width: 100%;
+        height: 100vh;
+        max-height: 100%;
+        border-radius: 0;
+        border: none;
+    }
+    .phone-notch {
+        display: none;
+    }
+}
+
+/* Header Aplikasi */
+.app-header {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+    color: #ffffff;
+    padding: 36px 20px 20px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    z-index: 10;
+}
+
+.app-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.app-title svg {
+    fill: #ffffff;
+    width: 24px;
+    height: 24px;
+}
+
+.user-badge {
+    background-color: rgba(255, 255, 255, 0.15);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.logout-btn:hover {
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+/* Area Konten Utama */
+.app-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    position: relative;
+    padding-bottom: 90px; /* Jarak untuk bottom nav */
+}
+
+/* Hide Scrollbar */
+.app-content::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+/* Layar-Layar Halaman */
+.app-screen {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+.app-screen.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* KARTU DAN ELEMEN DESAIN */
+.card {
+    background-color: var(--card-bg);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.card-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Buku Besar Keuangan Dashboard */
+.dashboard-balance {
+    background: linear-gradient(135deg, #022c22 0%, #064e3b 100%);
+    color: #ffffff;
+    border: none;
+    position: relative;
+}
+
+.dashboard-balance::after {
+    content: '';
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background-color: rgba(16, 185, 129, 0.1);
+    border-radius: 50%;
+    top: -50px;
+    right: -50px;
+}
+
+.balance-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+}
+
+.balance-amount {
+    font-family: 'Outfit', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    margin: 8px 0;
+    word-break: break-all;
+}
+
+.sub-accounts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.sub-account-item {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 10px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sub-account-name {
+    font-size: 10px;
+    opacity: 0.7;
+    margin-bottom: 2px;
+}
+
+.sub-account-val {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* INPUT FORMULIR & TOMBOL */
+.form-group {
+    margin-bottom: 16px;
+    text-align: left;
+}
+
+.form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text-dark);
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1.5px solid var(--border-color);
+    background-color: #fafafa;
+    font-size: 14px;
+    color: var(--text-dark);
+    transition: var(--transition);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+}
+
+.form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+}
+
+.btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-primary:active {
+    transform: scale(0.98);
+}
+
+.btn-secondary {
+    background-color: var(--border-color);
+    color: var(--text-dark);
+}
+
+.btn-secondary:hover {
+    background-color: #cbd5e1;
+}
+
+.btn-danger {
+    background-color: var(--error);
+    color: #ffffff;
+}
+
+.btn-danger:hover {
+    background-color: #dc2626;
+}
+
+/* TAMPILAN LOGIN / DAFTAR */
+.auth-logo {
+    text-align: center;
+    margin: 30px 0 20px 0;
+}
+
+.auth-logo svg {
+    width: 70px;
+    height: 70px;
+    fill: var(--primary);
+}
+
+.auth-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 5px;
+    color: var(--text-dark);
+}
+
+.auth-subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.auth-switch {
+    font-size: 13px;
+    text-align: center;
+    margin-top: 15px;
+    color: var(--text-muted);
+}
+
+.auth-switch span {
+    color: var(--primary);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* JURNAL TRANSAKSI AKUNTANSI */
+.tx-list {
+    margin-top: 10px;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.tx-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.tx-item:last-child {
+    border-bottom: none;
+}
+
+.tx-info {
+    text-align: left;
+}
+
+.tx-category {
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.tx-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.tx-date {
+    font-size: 9px;
+    color: var(--text-muted);
+}
+
+.tx-amount {
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.tx-amount.debit {
+    color: var(--success);
+}
+
+.tx-amount.credit {
+    color: var(--error);
+}
+
+/* NAVIGASI BAWAH (BOTTOM NAVIGATION BAR) */
+.bottom-nav {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background-color: #ffffff;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 50;
+    padding: 0 10px;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: 500;
+    transition: var(--transition);
+    gap: 4px;
+    flex: 1;
+}
+
+.nav-item svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    transition: var(--transition);
+}
+
+.nav-item.active {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.nav-item.active svg {
+    fill: var(--primary);
+    transform: translateY(-2px);
+}
+
+/* ASISTEN AI BANTUBOT CHAT UI */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 480px;
+    max-height: 520px;
+}
+
+.chat-history {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.chat-history::-webkit-scrollbar {
+    width: 0px;
+}
+
+.chat-bubble {
+    max-width: 80%;
+    padding: 12px 16px;
+    border-radius: 16px;
+    font-size: 13px;
+    line-height: 1.5;
+    word-break: break-word;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+}
+
+.chat-bubble.bot {
+    background-color: #e2e8f0;
+    color: var(--text-dark);
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+}
+
+.chat-bubble.user {
+    background-color: var(--primary);
+    color: #ffffff;
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+}
+
+.chat-bubble-meta {
+    font-size: 9px;
+    opacity: 0.6;
+    margin-top: 4px;
+    display: block;
+    text-align: right;
+}
+
+.chat-quick-replies {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+}
+
+.chat-quick-replies::-webkit-scrollbar {
+    height: 0px;
+}
+
+.quick-reply-btn {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--primary-dark);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 20px;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.quick-reply-btn:hover {
+    background-color: var(--primary);
+    color: #ffffff;
+}
+
+.chat-input-area {
+    display: flex;
+    gap: 8px;
+}
+
+.chat-input {
+    flex: 1;
+    border-radius: 24px;
+}
+
+.chat-send-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: var(--transition);
+    box-shadow: var(--shadow-md);
+}
+
+.chat-send-btn:hover {
+    background-color: var(--primary-dark);
+    transform: scale(1.05);
+}
+
+.chat-send-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: #ffffff;
+    transform: rotate(45deg) translate(-2px, 2px);
+}
+
+/* DIALOG DRAWER (SLIDE UP MODAL) */
+.drawer-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.drawer-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+.drawer {
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    padding: 30px 20px 20px 20px;
+    z-index: 101;
+    transition: bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 -10px 25px -5px rgba(0,0,0,0.2);
+}
+
+.drawer.active {
+    bottom: 0;
+}
+
+.drawer-handle {
+    width: 40px;
+    height: 4px;
+    background-color: var(--border-color);
+    border-radius: 2px;
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.drawer-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+
+/* PASAR MUAMALAH CARDS */
+.market-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.market-item-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+}
+
+.market-item-img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    background-color: #e2e8f0;
+}
+
+.market-item-content {
+    padding: 10px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.market-item-title {
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.market-item-seller {
+    font-size: 9px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+
+.market-item-price {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-top: auto;
+}
+
+/* TIKET DKM RAHASIA AI & VERIFIKASI WARGA */
+.badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 9px;
+    font-weight: 700;
+    display: inline-block;
+}
+
+.badge-pending { background-color: #fef3c7; color: #d97706; }
+.badge-approved { background-color: #d1fae5; color: #059669; }
+.badge-rejected { background-color: #fee2e2; color: #dc2626; }
+
+.ticket-item, .verify-item {
+    background-color: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+    text-align: left;
+}
+
+.ticket-header, .verify-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.ticket-body, .verify-body {
+    font-size: 12px;
+    color: var(--text-dark);
+    line-height: 1.4;
+}
+
+.ticket-meta, .verify-meta {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 8px;
+    border-top: 1px dashed var(--border-color);
+    padding-top: 6px;
+}
+
+/* QRIS SIMULATOR DIALOG */
+.qris-box {
+    border: 2px dashed var(--primary);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    margin: 15px auto;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0fdf4;
+}
+
+.qris-box canvas {
+    width: 100%;
+    height: 100%;
+}
+
+/* TOAST NOTIFIKASI */
+.toast {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    background-color: #1e293b;
+    color: #ffffff;
+    padding: 12px 16px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    font-size: 12px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translateY(-100px);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+}
+
+.toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.toast.success { border-left: 4px solid var(--success); }
+.toast.error { border-left: 4px solid var(--error); }
+.toast.info { border-left: 4px solid #3b82f6; }
+
+/* KUPON KLAIM SEMBAKO */
+.sembako-coupon-card {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.sembako-coupon-card::before, .sembako-coupon-card::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: var(--bg-phone);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.sembako-coupon-card::before { left: -10px; }
+.sembako-coupon-card::after { right: -10px; }
+
+.coupon-dashed {
+    border-top: 1.5px dashed rgba(255, 255, 255, 0.4);
+    margin: 12px 0;
+}
+
+/* GRUP VERIFIKASI PERAN DI TAMPILAN ADMIN */
+.admin-action-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.admin-action-row button {
+    flex: 1;
+    padding: 8px;
+    font-size: 11px;
+    border-radius: 8px;
+}
+
+.info-banner {
+    background-color: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1e40af;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 11px;
+    margin-bottom: 15px;
+    text-align: left;
+    line-height: 1.4;
+}

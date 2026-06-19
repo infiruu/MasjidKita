@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MasjidKita - Ekosistem Masjid Hiperlokal</title>
+    <!-- Import stylesheet CSS premium -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- Frame Container Mobile Simulator -->
+    <div class="phone-container">
+        <!-- Notch Handphone -->
+        <div class="phone-notch"></div>
+
+        <!-- Header Aplikasi -->
+        <header class="app-header">
+            <div class="app-title">
+                <!-- SVG Icon Masjid -->
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2L2 9h3v11h14V9h3L12 2zm0 4.25c1.24 0 2.25 1.01 2.25 2.25S13.24 10.75 12 10.75 9.75 9.74 9.75 8.5 10.76 6.25 12 6.25zM17 18H7v-6h10v6z"/>
+                </svg>
+                <span>MasjidKita</span>
+            </div>
+            <div class="user-badge" id="header-badge" style="display: none;"></div>
+        </header>
+
+        <!-- Toast Notifikasi (Pop-up modern) -->
+        <div class="toast" id="toast">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            <span class="toast-text"></span>
+        </div>
+
+        <!-- AREA KONTEN (SCROLLABLE) -->
+        <main class="app-content">
+
+            <!-- ==========================================
+                 SCREEN 1: LOGIN PENGGUNA
+                 ========================================== -->
+            <section id="screen-login" class="app-screen active">
+                <div class="auth-logo">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2L2 9h3v11h14V9h3L12 2zm0 4.25c1.24 0 2.25 1.01 2.25 2.25S13.24 10.75 12 10.75 9.75 9.74 9.75 8.5 10.76 6.25 12 6.25zM17 18H7v-6h10v6z"/>
+                    </svg>
+                </div>
+                <h2 class="auth-title">MasjidKita</h2>
+                <p class="auth-subtitle">Koneksi Pengurus DKM & Warga Kompleks Berkah</p>
+
+                <div class="info-banner" style="font-size: 11px;">
+                    <strong>Akun Demo Uji Coba:</strong><br>
+                    • Admin DKM: <strong>081234567890</strong> (Sandi: <strong>1234</strong>)<br>
+                    • Warga Terverifikasi: <strong>089876543210</strong> (Sandi: <strong>warga</strong>)<br>
+                    • Warga Belum Verifikasi: <strong>085544332211</strong> (Sandi: <strong>warga</strong>)
+                </div>
+
+                <form id="login-form">
+                    <div class="form-group">
+                        <label class="form-label">Nomor Telepon</label>
+                        <input type="tel" id="login-phone" class="form-input" placeholder="Contoh: 08123456789" required autocomplete="tel">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Kata Sandi</label>
+                        <input type="password" id="login-password" class="form-input" placeholder="Masukkan sandi akun" required autocomplete="current-password">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Masuk Akun</button>
+                </form>
+                <div class="auth-switch">Belum punya akun? <span onclick="toggleAuthView()">Daftar Warga Baru</span></div>
+            </section>
+
+            <!-- ==========================================
+                 SCREEN 2: DAFTAR WARGA BARU (CLOSED LOOP)
+                 ========================================== -->
+            <section id="screen-register" class="app-screen">
+                <div class="auth-logo">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2L2 9h3v11h14V9h3L12 2zm0 4.25c1.24 0 2.25 1.01 2.25 2.25S13.24 10.75 12 10.75 9.75 9.74 9.75 8.5 10.76 6.25 12 6.25zM17 18H7v-6h10v6z"/>
+                    </svg>
+                </div>
+                <h2 class="auth-title">Pendaftaran Warga</h2>
+                <p class="auth-subtitle">Sistem Registrasi Tertutup berbasis RT/RW Kompleks</p>
+
+                <form id="register-form">
+                    <div class="form-group">
+                        <label class="form-label">Nama Lengkap (Sesuai KTP)</label>
+                        <input type="text" id="reg-name" class="form-input" placeholder="Nama lengkap Anda" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Nomor Telepon (WhatsApp)</label>
+                        <input type="tel" id="reg-phone" class="form-input" placeholder="Contoh: 0812xxxx" required autocomplete="tel">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Kata Sandi</label>
+                        <input type="password" id="reg-password" class="form-input" placeholder="Tentukan kata sandi" required autocomplete="new-password">
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div class="form-group">
+                            <label class="form-label">RT</label>
+                            <select id="reg-rt" class="form-input form-select">
+                                <option value="01">RT 01</option>
+                                <option value="02">RT 02</option>
+                                <option value="03">RT 03</option>
+                                <option value="04">RT 04</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">RW</label>
+                            <select id="reg-rw" class="form-input form-select">
+                                <option value="05">RW 05</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Nomor Rumah / Blok</label>
+                        <input type="text" id="reg-block" class="form-input" placeholder="Contoh: Blok A-10" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Kirim Pengajuan</button>
+                </form>
+                <div class="auth-switch">Sudah terdaftar? <span onclick="toggleAuthView()">Masuk di sini</span></div>
+            </section>
+
+            <!-- ==========================================
+                 SCREEN 3: DASHBOARD KAS & AKUNTANSI
+                 ========================================== -->
+            <section id="screen-dashboard" class="app-screen">
+                <!-- Dashboard Buku Besar Transparansi -->
+                <div class="card dashboard-balance">
+                    <div class="balance-title">Dana Kas Masjid (Real-Time)</div>
+                    <div class="balance-amount" id="total-cash-balance">Rp 0</div>
+                    
+                    <div class="sub-accounts-grid">
+                        <div class="sub-account-item">
+                            <div class="sub-account-name">Kas Operasional</div>
+                            <div class="sub-account-val" id="val-operational-cash">Rp 0</div>
+                        </div>
+                        <div class="sub-account-item">
+                            <div class="sub-account-name">Zakat Umat</div>
+                            <div class="sub-account-val" id="val-zakat-fund">Rp 0</div>
+                        </div>
+                        <div class="sub-account-item">
+                            <div class="sub-account-name">Infaq & Sedekah</div>
+                            <div class="sub-account-val" id="val-infaq-sedekah-fund">Rp 0</div>
+                        </div>
+                        <div class="sub-account-item">
+                            <div class="sub-account-name">Darurat Sosial</div>
+                            <div class="sub-account-val" id="val-emergency-social-fund">Rp 0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tombol Pintas Pembayaran Syariah -->
+                <h3 class="card-title" style="margin-top: 25px;">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="var(--primary)"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                    Bayar Online (Zakat / Infaq)
+                </h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px;">
+                    <button class="btn btn-secondary" onclick="openPaymentDrawer('Infaq')">
+                        <span>Fasilitas Infaq</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="openPaymentDrawer('Sedekah')">
+                        <span>Kirim Sedekah</span>
+                    </button>
+                </div>
+
+                <!-- Jurnal Keuangan Terkini (Real-Time Ledger) -->
+                <div class="card">
+                    <h3 class="card-title">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="var(--primary)"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                        Jurnal Buku Besar Terkini
+                    </h3>
+                    <div class="tx-list" id="dashboard-tx-list"></div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 SCREEN 4: KALKULATOR & PENGINGAT ZAKAT
+                 ========================================== -->
+            <section id="screen-zakat" class="app-screen">
+                <div class="card">
+                    <h3 class="card-title">Kalkulator Zakat Syariah</h3>
+                    <div class="form-group">
+                        <label class="form-label">Pilih Jenis Zakat</label>
+                        <select id="zakat-type-select" class="form-input form-select" onchange="calculateZakat()">
+                            <option value="mal">Zakat Al-Mal (Harta/Tabungan)</option>
+                            <option value="profesi">Zakat Profesi (Penghasilan Bulanan)</option>
+                        </select>
+                    </div>
+
+                    <div id="zakat-mal-fields">
+                        <div class="form-group">
+                            <label class="form-label">Total Uang/Tabungan/Deposito (Rp)</label>
+                            <input type="number" id="zakat-wealth" class="form-input" placeholder="Rp 0" oninput="calculateZakat()">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Emas Mengendap Tidak Dipakai (Gram)</label>
+                            <input type="number" id="zakat-gold" class="form-input" placeholder="0 gram" oninput="calculateZakat()">
+                        </div>
+                    </div>
+
+                    <div id="zakat-profesi-fields" style="display: none;">
+                        <div class="form-group">
+                            <label class="form-label">Gaji / Pendapatan Bulanan (Rp)</label>
+                            <input type="number" id="zakat-salary" class="form-input" placeholder="Rp 0" oninput="calculateZakat()">
+                        </div>
+                    </div>
+
+                    <!-- Hasil kalkulator -->
+                    <div class="info-banner" id="zakat-result-box" style="display: none; background-color: #ecfdf5; border-color: #a7f3d0; color: #065f46;">
+                        <div style="font-size: 12px; font-weight: 500;">Estimasi Kewajiban Zakat Anda:</div>
+                        <div id="zakat-result-amount" style="font-family: 'Outfit'; font-size: 24px; font-weight: 800; margin: 5px 0;">Rp 0</div>
+                        <div id="zakat-result-explanation" style="font-size: 10px; line-height: 1.4; opacity: 0.9;"></div>
+                        <button class="btn btn-primary" id="zakat-pay-btn" style="margin-top: 10px; padding: 8px; font-size: 12px;">Bayar Zakat Sekarang</button>
+                    </div>
+                </div>
+
+                <!-- Pengatur Pengingat Zakat Otomatis -->
+                <div class="card">
+                    <h3 class="card-title">Pengingat Gajian & Zakat</h3>
+                    <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Sistem akan mengirimkan push notifikasi ramah untuk menunaikan zakat profesi sesaat setelah tanggal gajian Anda.</p>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Tanggal Gajian Bulanan</label>
+                        <input type="number" id="zakat-salary-date" class="form-input" min="1" max="31" placeholder="25">
+                    </div>
+                    <button class="btn btn-secondary" onclick="saveZakatReminder()">Simpan Konfigurasi</button>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 SCREEN 5: PROGRAM SOSIAL & PINJAMAN MUAMALAH
+                 ========================================== -->
+            <section id="screen-loans" class="app-screen">
+                <!-- Pemilihan Fitur: Qardhul Hasan / E-Sembako -->
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <button class="btn btn-primary" onclick="document.getElementById('loan-section').style.display='block'; document.getElementById('sembako-section').style.display='none'; this.classList.replace('btn-secondary', 'btn-primary'); document.getElementById('sembako-tab-btn').classList.replace('btn-primary', 'btn-secondary');" style="flex: 1; padding: 10px; font-size: 12px;">
+                        Qardhul Hasan
+                    </button>
+                    <button class="btn btn-secondary" id="sembako-tab-btn" onclick="document.getElementById('loan-section').style.display='none'; document.getElementById('sembako-section').style.display='block'; this.classList.replace('btn-secondary', 'btn-primary'); previousElementSibling.classList.replace('btn-primary', 'btn-secondary');" style="flex: 1; padding: 10px; font-size: 12px;">
+                        E-Sembako
+                    </button>
+                </div>
+
+                <!-- SUB-SECTION A: QARDHUL HASAN -->
+                <div id="loan-section">
+                    <!-- Form Pengajuan Pinjaman Kebajikan -->
+                    <div class="card">
+                        <h3 class="card-title">Formulir Pinjaman Qardhul Hasan</h3>
+                        <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Pinjaman darurat bebas bunga (Riba). Dana ditarik dari rekening darurat sosial masjid.</p>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Besar Pinjaman (Rp)</label>
+                            <input type="number" id="loan-amount" class="form-input" placeholder="Contoh: 1000000">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Tenor Pengembalian (Bulan)</label>
+                            <select id="loan-tenor" class="form-input form-select">
+                                <option value="3">3 Bulan</option>
+                                <option value="6">6 Bulan</option>
+                                <option value="12">12 Bulan</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Tujuan Pemanfaatan Dana</label>
+                            <textarea id="loan-purpose" class="form-input" placeholder="Tuliskan tujuan (misal: Biaya Sekolah Anak, Modal Warung)" style="height: 60px; resize: none;"></textarea>
+                        </div>
+                        <button class="btn btn-primary" onclick="submitLoanApplication()">Ajukan Pinjaman</button>
+                    </div>
+
+                    <!-- Riwayat Pinjaman Pengguna -->
+                    <h3 class="card-title">Riwayat Pinjaman Anda</h3>
+                    <div id="loan-list-container"></div>
+                </div>
+
+                <!-- SUB-SECTION B: E-SEMBAKO -->
+                <div id="sembako-section" style="display: none;">
+                    <div class="card">
+                        <h3 class="card-title">Voucher Pangan E-Sembako</h3>
+                        <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 15px;">Bantuan pangan pangan sembako senilai Rp 150.000 per bulan bagi warga yang berhak dan membutuhkan.</p>
+                        
+                        <button class="btn btn-primary" onclick="claimSembakoCoupon()">Ambil Kupon Pangan Bulanan</button>
+                    </div>
+
+                    <h3 class="card-title">Kupon Aktif Anda</h3>
+                    <div id="sembako-coupons-container"></div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 SCREEN 6: PASAR MUAMALAH (MARKETPLACE P2P)
+                 ========================================== -->
+            <section id="screen-market" class="app-screen">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3 class="card-title" style="margin: 0;">Pasar Muamalah Kompleks</h3>
+                    <button class="btn btn-primary" onclick="openMarketDrawer()" style="width: auto; padding: 6px 12px; font-size: 11px;">+ Jual Barang</button>
+                </div>
+                
+                <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 15px; text-align: left;">Pasar digital internal kompleks RT/RW untuk mendongkrak ekonomi warga dengan transaksi jual beli lokal yang berkah.</p>
+
+                <!-- Grid dagangan warga -->
+                <div class="market-grid" id="market-grid-container"></div>
+            </section>
+
+            <!-- ==========================================
+                 SCREEN 7: CHAT ASISTEN AI BANTUBOT
+                 ========================================== -->
+            <section id="screen-chat" class="app-screen">
+                <div class="chat-container">
+                    <!-- Area Log Obrolan -->
+                    <div class="chat-history" id="chat-history-container"></div>
+
+                    <!-- Pertanyaan Pintas (Quick Replies) -->
+                    <div class="chat-quick-replies">
+                        <button class="quick-reply-btn" onclick="sendChatMessage('Bagaimana cara hitung Zakat Mal?')">Hitung Zakat Mal</button>
+                        <button class="quick-reply-btn" onclick="sendChatMessage('Apa itu Qardhul Hasan?')">Tentang Qardhul Hasan</button>
+                        <button class="quick-reply-btn" onclick="sendChatMessage('Saya butuh bantuan keuangan')">Pengaduan Darurat (Anonim)</button>
+                    </div>
+
+                    <!-- Input Pesan -->
+                    <div class="chat-input-area">
+                        <input type="text" id="chat-input-text" class="form-input chat-input" placeholder="Tanya BantuBot di sini..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
+                        <button class="chat-send-btn" onclick="sendChatMessage()">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 SCREEN 8: DASBOR DKD ADMIN / PENGURUS
+                 ========================================== -->
+            <section id="screen-admin" class="app-screen">
+                <h2 class="card-title" style="margin-bottom: 20px; font-family: 'Outfit'; font-size: 18px;">Dasbor Pengurus DKM</h2>
+
+                <!-- 1. Antrean Verifikasi Akun Warga -->
+                <div class="card">
+                    <h3 class="card-title" style="color: var(--primary-dark);">Verifikasi Warga Baru</h3>
+                    <div id="pending-residents-list"></div>
+                </div>
+
+                <!-- 2. Pengajuan Pinjaman Qardhul Hasan pending -->
+                <div class="card">
+                    <h3 class="card-title" style="color: var(--primary-dark);">Persetujuan Qardhul Hasan</h3>
+                    <div id="admin-loans-list"></div>
+                </div>
+
+                <!-- 3. Tiket Bantuan Rahasia AI (Discreet Tickets) -->
+                <div class="card">
+                    <h3 class="card-title" style="color: var(--primary-dark);">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--error)" style="vertical-align: middle; margin-right: 5px;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                        Tiket Sosial Rahasia AI
+                    </h3>
+                    <p style="font-size: 10px; color: var(--text-muted); margin-bottom: 12px;">Skrining awal warga miskin oleh BantuBot yang disembunyikan data pribadinya untuk memuliakan pemohon.</p>
+                    <div id="admin-tickets-list"></div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- ==========================================
+             DRAWER MODALS (INTERAKTIF SLIDE-UP PANELS)
+             ========================================== -->
+
+        <!-- 1. Drawer Pembayaran QRIS / Transfer -->
+        <div class="drawer-overlay" id="payment-overlay" onclick="closePaymentDrawer()"></div>
+        <div class="drawer" id="payment-drawer">
+            <div class="drawer-handle"></div>
+            <button class="drawer-close" onclick="closePaymentDrawer()">×</button>
+            <h3 style="font-family: 'Outfit'; font-size: 18px; margin-bottom: 15px;">Simulasi Pembayaran Syariah</h3>
+            
+            <div class="form-group">
+                <label class="form-label">Kategori Pembayaran</label>
+                <div style="font-weight: 700; color: var(--primary-dark); font-size: 16px;" id="payment-category">-</div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Nominal Pembayaran (Rp)</label>
+                <input type="number" id="payment-amount-input" class="form-input" placeholder="Rp 0">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Deskripsi Tambahan</label>
+                <input type="text" id="payment-desc-input" class="form-input" placeholder="Tulis catatan (Opsional)">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Metode Pembayaran</label>
+                <select id="payment-method-select" class="form-input form-select">
+                    <option value="QRIS">QRIS Instan (Simulasi)</option>
+                    <option value="Bank Transfer">Bank Transfer Virtual Account</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary" onclick="processPaymentSubmission()" style="margin-top: 15px;">Bayar Sekarang</button>
+        </div>
+
+        <!-- 2. Drawer Barcode/QRIS Simulator -->
+        <div class="drawer-overlay" id="qris-overlay" style="z-index: 150;" onclick="closePaymentDrawer()"></div>
+        <div class="drawer" id="qris-drawer" style="z-index: 151; text-align: center; padding-bottom: 30px;">
+            <div class="drawer-handle"></div>
+            <button class="drawer-close" onclick="closePaymentDrawer()">×</button>
+            <h3 style="font-family: 'Outfit'; font-size: 16px; margin-bottom: 5px;">Scan Kode QRIS</h3>
+            <p style="font-size: 11px; color: var(--text-muted);">Dana Masuk Rekening Kas MasjidKita</p>
+            
+            <div class="qris-box">
+                <canvas id="qris-canvas" width="200" height="200"></canvas>
+            </div>
+
+            <div style="font-family: 'Outfit'; font-size: 18px; font-weight: 700; margin-bottom: 15px;" id="qris-payment-amount">Rp 0</div>
+            
+            <button class="btn btn-primary" onclick="simulateQRISScanSuccess()">Simulasikan Scan Sukses</button>
+        </div>
+
+        <!-- 3. Drawer Angsuran Qardhul Hasan -->
+        <div class="drawer-overlay" id="repay-overlay" onclick="closeRepaymentDrawer()"></div>
+        <div class="drawer" id="repay-drawer">
+            <div class="drawer-handle"></div>
+            <button class="drawer-close" onclick="closeRepaymentDrawer()">×</button>
+            <h3 style="font-family: 'Outfit'; font-size: 18px; margin-bottom: 15px;">Pembayaran Pokok Pinjaman</h3>
+            
+            <div class="info-banner" id="repay-max-info"></div>
+
+            <div class="form-group">
+                <label class="form-label">Nominal Angsuran (Rp)</label>
+                <input type="number" id="repay-amount-input" class="form-input">
+            </div>
+
+            <button class="btn btn-primary" onclick="processRepaymentSubmission()" style="margin-top: 15px;">Kirim Angsuran</button>
+        </div>
+
+        <!-- 4. Drawer Struk Digital (Digital Receipt) -->
+        <div class="drawer-overlay" id="receipt-overlay" style="z-index: 200;" onclick="closeReceiptDrawer()"></div>
+        <div class="drawer" id="receipt-drawer" style="z-index: 201; border-top-left-radius: 40px; border-top-right-radius: 40px;">
+            <div class="drawer-handle"></div>
+            <button class="drawer-close" onclick="closeReceiptDrawer()">×</button>
+            <div id="receipt-content"></div>
+            <button class="btn btn-secondary" onclick="closeReceiptDrawer()" style="margin-top: 20px;">Tutup</button>
+        </div>
+
+        <!-- 5. Drawer Tambah Dagangan Pasar Muamalah -->
+        <div class="drawer-overlay" id="market-overlay" onclick="closeMarketDrawer()"></div>
+        <div class="drawer" id="market-drawer">
+            <div class="drawer-handle"></div>
+            <button class="drawer-close" onclick="closeMarketDrawer()">×</button>
+            <h3 style="font-family: 'Outfit'; font-size: 18px; margin-bottom: 15px;">Pasang Dagangan Baru</h3>
+            
+            <div class="form-group">
+                <label class="form-label">Nama Barang / Jasa</label>
+                <input type="text" id="market-item-title-input" class="form-input" placeholder="Contoh: Kue Nastar Keju">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Harga Produk (Rp)</label>
+                <input type="number" id="market-item-price-input" class="form-input" placeholder="Rp 0">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Kategori</label>
+                <select id="market-item-cat-select" class="form-input form-select">
+                    <option value="Makanan & Minuman">Makanan & Minuman</option>
+                    <option value="Jasa">Jasa / Servis</option>
+                    <option value="Pakaian">Pakaian</option>
+                    <option value="Kebutuhan Rumah">Kebutuhan Rumah</option>
+                    <option value="Lainnya">Lainnya</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">URL Foto Produk (Opsional)</label>
+                <input type="text" id="market-item-img-input" class="form-input" placeholder="https://example.com/foto.jpg">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Deskripsi Tambahan</label>
+                <textarea id="market-item-desc-input" class="form-input" placeholder="Spesifikasi atau detail pemesanan" style="height: 60px; resize: none;"></textarea>
+            </div>
+
+            <button class="btn btn-primary" onclick="submitMarketItem()" style="margin-top: 15px;">Pasang Sekarang</button>
+        </div>
+
+        <!-- ==========================================
+             NAVIGATION BAR (MENU FLATING DI BAWAH)
+             ========================================== -->
+        <nav class="bottom-nav" id="bottom-nav-bar" style="display: none;">
+            <div class="nav-item active" onclick="switchScreen('screen-dashboard')">
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                <span>Dashboard</span>
+            </div>
+            <div class="nav-item" onclick="switchScreen('screen-zakat')">
+                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4 6h-4v2h4v2h-4v2h4v2H9V7h6v2z"/></svg>
+                <span>Zakat</span>
+            </div>
+            <div class="nav-item" onclick="switchScreen('screen-loans')">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+                <span>Welfare</span>
+            </div>
+            <div class="nav-item" onclick="switchScreen('screen-market')">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4L3 12v2c0 .55.45 1 1 1h1v6h10v-6h4v6h2v-6h1c.55 0 1-.45 1-1zm-9 4H8v-3h4v3z"/></svg>
+                <span>Market</span>
+            </div>
+            <div class="nav-item" onclick="switchScreen('screen-chat')">
+                <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+                <span>BantuBot</span>
+            </div>
+            <!-- Menu Khusus Admin DKM (Bisa disembunyikan dinamis) -->
+            <div class="nav-item" id="nav-admin-tab" onclick="switchScreen('screen-admin')" style="display: none;">
+                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                <span>DKM Panel</span>
+            </div>
+        </nav>
+
+    </div>
+
+    <!-- Script Logika Frontend -->
+    <script src="js/app.js"></script>
+</body>
+</html>

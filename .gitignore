@@ -1,0 +1,9 @@
+# Folder besar yang tidak perlu di-upload ke GitHub
+jdk17_extracted2/
+jdk17_temp.zip
+android-app/
+backend/
+node_modules/
+.vercel/
+.DS_Store
+*.log
