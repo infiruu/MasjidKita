@@ -53,13 +53,13 @@
                 <form id="login-form">
                     <div class="form-group">
                         <label class="form-label">Nomor Telepon</label>
-                        <input type="tel" id="username" class="form-input" placeholder="Contoh: 08123456789" required autocomplete="tel">
+                        <input type="tel" id="login-phone" class="form-input" placeholder="Contoh: 08123456789" required autocomplete="tel">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Kata Sandi</label>
-                        <input type="password" id="password" class="form-input" placeholder="Masukkan sandi akun" required autocomplete="current-password">
+                        <input type="password" id="login-password" class="form-input" placeholder="Masukkan sandi akun" required autocomplete="current-password">
                     </div>
-                    <button type="button" class="btn btn-primary" style="margin-top: 10px;">Masuk Akun</button>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Masuk Akun</button>
                 </form>
                 <div class="auth-switch">Belum punya akun? <span onclick="toggleAuthView()">Daftar Warga Baru</span></div>
             </section>
@@ -509,20 +509,32 @@
     </div>
 
     <!-- Script Logika Frontend -->
-    <script src="js/app.js"></script>
-</body>
-</html>
 <script>
-   function cekLogin() {
-    let user = document.getElementById("username").value;
-    let pass = document.getElementById("password").value;
+    document.addEventListener("DOMContentLoaded", function() {
+        const loginForm = document.getElementById("login-form");
+        
+        if (loginForm) {
+            loginForm.addEventListener("submit", function(event) {
+                event.preventDefault(); // Mencegah halaman reload
+                
+                const user = document.getElementById("login-phone").value;
+                const pass = document.getElementById("login-password").value;
 
-    // Kita sesuaikan dengan nomor yang lo input di screenshot
-    if (user === "0812345678910" && pass === "1234") {
-        window.location.href = "dashboard-admin.html";
-    } else if (user === "089876543210" && pass === "warga") {
-        window.location.href = "dashboard-warga.html";
-    } else {
-        alert("Gagal. User lo: " + user + " & Pass lo: " + pass);
-    }
-}
+                console.log("Input User:", user);
+                console.log("Input Pass:", pass);
+
+                // Logika Login
+                if (user === "081234567898" && pass === "1234") {
+                    window.location.href = "dashboard-admin.html";
+                } else if (user === "089876543210" && pass === "warga") {
+                    window.location.href = "dashboard-warga.html";
+                } else {
+                    alert("Nomor atau Kata Sandi salah, men!");
+                }
+            });
+        } else {
+            console.error("Form login tidak ditemukan! Pastikan id='login-form' ada di tag <form> lo.");
+        }
+    });
+</script>
+</body>
