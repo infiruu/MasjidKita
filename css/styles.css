@@ -102,7 +102,17 @@ body {
     position: relative;
     z-index: 10;
 }
-
+header {
+    pointer-events: none; /* Biar kursor tembus ke bawah */
+    position: relative;
+    z-index: 1; /* Biar tetap di bawah elemen lain */
+}
+/* Pastikan tombol-tombolnya bisa menerima klik */
+.card, button, .nav-item {
+    pointer-events: auto !important;
+    z-index: 100 !important;
+    position: relative;
+}
 .app-title {
     font-family: 'Outfit', sans-serif;
     font-size: 20px;
