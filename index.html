@@ -517,10 +517,14 @@
                 event.preventDefault();
                 const user = document.getElementById("login-phone").value;
                 const pass = document.getElementById("login-password").value;
+
+                // Logika ganti screen
                 if (user === "081234567898" && pass === "1234") {
-                    window.location.href = "dashboard-admin.html";
+                    document.getElementById('screen-admin').style.display = 'block';
+                    document.getElementById('screen-login').style.display = 'none'; 
                 } else if (user === "089876543210" && pass === "warga") {
-                    window.location.href = "dashboard-warga.html";
+                    document.getElementById('screen-warga').style.display = 'block';
+                    document.getElementById('screen-login').style.display = 'none';
                 } else {
                     alert("Nomor atau Kata Sandi salah, men!");
                 }
