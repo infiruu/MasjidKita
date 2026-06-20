@@ -1301,3 +1301,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const registerForm = document.getElementById('register-form');
     if (registerForm) registerForm.addEventListener('submit', registerUser);
 });
+// --- LOGIKA LOGIN BARU (GANTIIN YANG LAMA) ---
+function cekLogin() {
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
+
+    if (user === "admin" && pass === "12345678910") {
+        window.location.href = "dashboard-admin.html";
+    } else if (user === "warga" && pass === "10987654321") {
+        window.location.href = "dashboard-warga.html";
+    } else {
+        alert("Username atau Password salah, men!");
+    }
+}
