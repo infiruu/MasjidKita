@@ -510,18 +510,13 @@
 
     <!-- Script Logika Frontend -->
 <script>
-   <script>
     document.addEventListener("DOMContentLoaded", function() {
         const loginForm = document.getElementById("login-form");
-        
         if (loginForm) {
             loginForm.addEventListener("submit", function(event) {
-                event.preventDefault(); // Mencegah reload halaman
-                
+                event.preventDefault();
                 const user = document.getElementById("login-phone").value;
                 const pass = document.getElementById("login-password").value;
-
-                // Logika Login
                 if (user === "081234567898" && pass === "1234") {
                     window.location.href = "dashboard-admin.html";
                 } else if (user === "089876543210" && pass === "warga") {
