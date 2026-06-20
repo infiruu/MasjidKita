@@ -513,16 +513,16 @@
 </body>
 </html>
 <script>
-    function cekLogin() {
-        let user = document.getElementById("username").value;
-        let pass = document.getElementById("password").value;
+   function cekLogin() {
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
 
-        if (user === "admin" && pass === "12345678910") {
-            window.location.href = "dashboard-admin.html";
-        } else if (user === "warga" && pass === "10987654321") {
-            window.location.href = "dashboard-warga.html";
-        } else {
-            alert("Username atau Password salah, men!");
-        }
+    // Kita sesuaikan dengan nomor yang lo input di screenshot
+    if (user === "0812345678910" && pass === "1234") {
+        window.location.href = "dashboard-admin.html";
+    } else if (user === "089876543210" && pass === "warga") {
+        window.location.href = "dashboard-warga.html";
+    } else {
+        alert("Gagal. User lo: " + user + " & Pass lo: " + pass);
     }
-</script>
+}
