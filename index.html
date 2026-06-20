@@ -47,23 +47,24 @@
                 <h2 class="auth-title">MasjidKita</h2>
                 <p class="auth-subtitle">Koneksi Pengurus DKM & Warga Kompleks Berkah</p>
 
-                <div class="info-banner" style="font-size: 11px;">
-                    <strong>Akun Demo Uji Coba:</strong><br>
-                    • Admin DKM: <strong>081234567890</strong> (Sandi: <strong>1234</strong>)<br>
-                    • Warga Terverifikasi: <strong>089876543210</strong> (Sandi: <strong>warga</strong>)<br>
-                    • Warga Belum Verifikasi: <strong>085544332211</strong> (Sandi: <strong>warga</strong>)
-                </div>
+                <!-- Form Login -->
+<div class="login-container">
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="cekLogin()">Masuk Akun</button>
+    <p style="text-align: center; margin-top: 15px;">Belum punya akun? <a href="signup.html">Daftar di sini</a></p>
+</div>
 
                 <form id="login-form">
                     <div class="form-group">
                         <label class="form-label">Nomor Telepon</label>
-                        <input type="tel" id="login-phone" class="form-input" placeholder="Contoh: 08123456789" required autocomplete="tel">
+                        <input type="tel" id="username" class="form-input" placeholder="Contoh: 08123456789" required autocomplete="tel">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Kata Sandi</label>
-                        <input type="password" id="login-password" class="form-input" placeholder="Masukkan sandi akun" required autocomplete="current-password">
+                        <input type="password" id="password" class="form-input" placeholder="Masukkan sandi akun" required autocomplete="current-password">
                     </div>
-                    <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Masuk Akun</button>
+                    <button type="button" class="btn btn-primary" style="margin-top: 10px;">Masuk Akun</button>
                 </form>
                 <div class="auth-switch">Belum punya akun? <span onclick="toggleAuthView()">Daftar Warga Baru</span></div>
             </section>
