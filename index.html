@@ -510,21 +510,16 @@
 
     <!-- Script Logika Frontend -->
 <script>
-    <script>
+   <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // Kita spesifik cari form dengan id 'login-form'
         const loginForm = document.getElementById("login-form");
         
         if (loginForm) {
             loginForm.addEventListener("submit", function(event) {
-                event.preventDefault(); // Mencegah reload
+                event.preventDefault(); // Mencegah reload halaman
                 
-                // Ambil nilai dari input yang bener
                 const user = document.getElementById("login-phone").value;
                 const pass = document.getElementById("login-password").value;
-
-                console.log("Input User:", user);
-                console.log("Input Pass:", pass);
 
                 // Logika Login
                 if (user === "081234567898" && pass === "1234") {
