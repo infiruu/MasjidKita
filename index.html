@@ -510,13 +510,16 @@
 
     <!-- Script Logika Frontend -->
 <script>
+    <script>
     document.addEventListener("DOMContentLoaded", function() {
+        // Kita spesifik cari form dengan id 'login-form'
         const loginForm = document.getElementById("login-form");
         
         if (loginForm) {
             loginForm.addEventListener("submit", function(event) {
-                event.preventDefault(); // Mencegah halaman reload
+                event.preventDefault(); // Mencegah reload
                 
+                // Ambil nilai dari input yang bener
                 const user = document.getElementById("login-phone").value;
                 const pass = document.getElementById("login-password").value;
 
@@ -532,8 +535,6 @@
                     alert("Nomor atau Kata Sandi salah, men!");
                 }
             });
-        } else {
-            console.error("Form login tidak ditemukan! Pastikan id='login-form' ada di tag <form> lo.");
         }
     });
 </script>
