@@ -509,27 +509,5 @@
     </div>
 
     <!-- Script Logika Frontend -->
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const loginForm = document.getElementById("login-form");
-        if (loginForm) {
-            loginForm.addEventListener("submit", function(event) {
-                event.preventDefault();
-                const user = document.getElementById("login-phone").value;
-                const pass = document.getElementById("login-password").value;
-
-                // Logika ganti screen
-                if (user === "081234567898" && pass === "1234") {
-                    document.getElementById('screen-admin').style.display = 'block';
-                    document.getElementById('screen-login').style.display = 'none'; 
-                } else if (user === "089876543210" && pass === "warga") {
-                    document.getElementById('screen-warga').style.display = 'block';
-                    document.getElementById('screen-login').style.display = 'none';
-                } else {
-                    alert("Nomor atau Kata Sandi salah, men!");
-                }
-            });
-        }
-    });
-</script>
+    <script src="js/app.js"></script>
 </body>

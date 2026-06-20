@@ -1049,118 +1049,128 @@ function generateAIResponse(input) {
 // ==========================================
 
 function loadAdminData() {
-    const users = DB.get('users');
-    const tickets = DB.get('tickets');
-    const coupons = DB.get('coupons');
+    try {
+        const users = DB.get('users') || [];
+        const tickets = DB.get('tickets') || [];
+        const coupons = DB.get('coupons') || [];
 
-    // 1. Verifikasi Warga Pending
-    const pendingContainer = document.getElementById('pending-residents-list');
-    pendingContainer.innerHTML = '';
+        // 1. Verifikasi Warga Pending
+        const pendingContainer = document.getElementById('pending-residents-list');
+        if (pendingContainer) {
+            pendingContainer.innerHTML = '';
+            const pendingUsers = users.filter(u => u.role === 'resident' && u.is_verified === 0);
 
-    const pendingUsers = users.filter(u => u.role === 'resident' && u.is_verified === 0);
-
-    if (pendingUsers.length === 0) {
-        pendingContainer.innerHTML = '<div class="text-muted" style="font-size: 11px;">Tidak ada permohonan warga baru yang pending.</div>';
-    } else {
-        pendingUsers.forEach(u => {
-            const item = document.createElement('div');
-            item.className = 'verify-item';
-            item.innerHTML = `
-                <div class="verify-header">
-                    <strong>${u.name}</strong>
-                    <span class="badge badge-pending">Pending</span>
-                </div>
-                <div class="verify-body">
-                    Telp: <strong>${u.phone}</strong><br>
-                    Alamat: <strong>RT ${u.rt} / RW ${u.rw} - Blok ${u.block_number}</strong>
-                    <div class="admin-action-row">
-                        <button onclick="processResidentVerification(${u.id}, true)" class="btn btn-primary">Setujui</button>
-                        <button onclick="processResidentVerification(${u.id}, false)" class="btn btn-danger">Tolak</button>
-                    </div>
-                </div>
-            `;
-            pendingContainer.appendChild(item);
-        });
-    }
-
-    // 2. Tiket Bantuan Rahasia AI (Discreet Tickets)
-    const ticketsContainer = document.getElementById('admin-tickets-list');
-    ticketsContainer.innerHTML = '';
-
-    if (tickets.length === 0) {
-        ticketsContainer.innerHTML = '<div class="text-muted" style="font-size: 11px;">Tidak ada tiket sosial masuk.</div>';
-    } else {
-        tickets.forEach(t => {
-            let badge = '';
-            let buttons = '';
-
-            if (t.status === 'pending') {
-                badge = '<span class="badge badge-pending">Menunggu Review</span>';
-                buttons = `
-                    <div class="admin-action-row">
-                        <button onclick="processDiscreetTicket(${t.id}, true)" class="btn btn-primary">Setujui & Cairkan Kas</button>
-                        <button onclick="processDiscreetTicket(${t.id}, false)" class="btn btn-danger">Tolak</button>
-                    </div>
-                `;
-            } else if (t.status === 'approved') {
-                badge = '<span class="badge badge-approved">Disetujui</span>';
-                buttons = `<div style="font-size: 11px; margin-top: 8px; color: var(--success);">Diselesaikan: <em>"${t.action_taken}"</em></div>`;
+            if (pendingUsers.length === 0) {
+                pendingContainer.innerHTML = '<div class="text-muted" style="font-size: 11px;">Tidak ada permohonan warga baru yang pending.</div>';
             } else {
-                badge = '<span class="badge badge-rejected">Ditolak</span>';
+                pendingUsers.forEach(u => {
+                    const item = document.createElement('div');
+                    item.className = 'verify-item';
+                    item.innerHTML = `
+                        <div class="verify-header">
+                            <strong>${u.name}</strong>
+                            <span class="badge badge-pending">Pending</span>
+                        </div>
+                        <div class="verify-body">
+                            Telp: <strong>${u.phone}</strong><br>
+                            Alamat: <strong>RT ${u.rt} / RW ${u.rw} - Blok ${u.block_number}</strong>
+                            <div class="admin-action-row">
+                                <button onclick="processResidentVerification(${u.id}, true)" class="btn btn-primary">Setujui</button>
+                                <button onclick="processResidentVerification(${u.id}, false)" class="btn btn-danger">Tolak</button>
+                            </div>
+                        </div>
+                    `;
+                    pendingContainer.appendChild(item);
+                });
             }
+        }
 
-            const item = document.createElement('div');
-            item.className = 'ticket-item';
-            item.innerHTML = `
-                <div class="ticket-header">
-                    <strong>Tiket Rahasia #${t.id} (${t.encrypted_alias})</strong>
-                    ${badge}
-                </div>
-                <div class="ticket-body">
-                    Skrining AI: <em>"${t.screening_summary}"</em><br>
-                    Jumlah Permintaan: <strong>${formatRupiah(t.requested_amount)}</strong>
-                    ${buttons}
-                </div>
-                <div class="ticket-meta">Diajukan: ${formatDate(t.created_at)}</div>
-            `;
-            ticketsContainer.appendChild(item);
-        });
-    }
+        // 2. Tiket Bantuan Rahasia AI (Discreet Tickets)
+        const ticketsContainer = document.getElementById('admin-tickets-list');
+        if (ticketsContainer) {
+            ticketsContainer.innerHTML = '';
 
-    // 3. Permintaan Pinjaman Qardhul Hasan (Admin Approval)
-    const loansContainer = document.getElementById('admin-loans-list');
-    loansContainer.innerHTML = '';
+            if (tickets.length === 0) {
+                ticketsContainer.innerHTML = '<div class="text-muted" style="font-size: 11px;">Tidak ada tiket sosial masuk.</div>';
+            } else {
+                tickets.forEach(t => {
+                    let badge = '';
+                    let buttons = '';
 
-    const loans = DB.get('loans');
-    const pendingLoans = loans.filter(l => l.status === 'pending');
+                    if (t.status === 'pending') {
+                        badge = '<span class="badge badge-pending">Menunggu Review</span>';
+                        buttons = `
+                            <div class="admin-action-row">
+                                <button onclick="processDiscreetTicket(${t.id}, true)" class="btn btn-primary">Setujui & Cairkan Kas</button>
+                                <button onclick="processDiscreetTicket(${t.id}, false)" class="btn btn-danger">Tolak</button>
+                            </div>
+                        `;
+                    } else if (t.status === 'approved') {
+                        badge = '<span class="badge badge-approved">Disetujui</span>';
+                        buttons = `<div style="font-size: 11px; margin-top: 8px; color: var(--success);">Diselesaikan: <em>"${t.action_taken}"</em></div>`;
+                    } else {
+                        badge = '<span class="badge badge-rejected">Ditolak</span>';
+                    }
 
-    if (pendingLoans.length === 0) {
-        loansContainer.innerHTML = '<div class="text-muted" style="font-size: 11px;">Tidak ada permohonan pinjaman pending.</div>';
-    } else {
-        pendingLoans.forEach(l => {
-            const resident = users.find(u => u.id === l.resident_id);
-            const rName = resident ? resident.name : 'Warga';
-            
-            const item = document.createElement('div');
-            item.className = 'ticket-item';
-            item.innerHTML = `
-                <div class="ticket-header">
-                    <strong>Pinjaman #${l.id} - ${rName}</strong>
-                    <span class="badge badge-pending">Pending</span>
-                </div>
-                <div class="ticket-body">
-                    Jumlah: <strong>${formatRupiah(l.amount)}</strong><br>
-                    Tenor: <strong>${l.tenor_months} Bulan</strong><br>
-                    Tujuan: <em>"${l.purpose}"</em>
-                    <div class="admin-action-row">
-                        <button onclick="processLoanApproval(${l.id}, true)" class="btn btn-primary">Setujui & Transfer</button>
-                        <button onclick="processLoanApproval(${l.id}, false)" class="btn btn-danger">Tolak</button>
-                    </div>
-                </div>
-                <div class="ticket-meta">Diajukan: ${formatDate(l.created_at)}</div>
-            `;
-            loansContainer.appendChild(item);
-        });
+                    const item = document.createElement('div');
+                    item.className = 'ticket-item';
+                    item.innerHTML = `
+                        <div class="ticket-header">
+                            <strong>Tiket Rahasia #${t.id} (${t.encrypted_alias})</strong>
+                            ${badge}
+                        </div>
+                        <div class="ticket-body">
+                            Skrining AI: <em>"${t.screening_summary}"</em><br>
+                            Jumlah Permintaan: <strong>${formatRupiah(t.requested_amount)}</strong>
+                            ${buttons}
+                        </div>
+                        <div class="ticket-meta">Diajukan: ${formatDate(t.created_at)}</div>
+                    `;
+                    ticketsContainer.appendChild(item);
+                });
+            }
+        }
+
+        // 3. Permintaan Pinjaman Qardhul Hasan (Admin Approval)
+        const loansContainer = document.getElementById('admin-loans-list');
+        if (loansContainer) {
+            loansContainer.innerHTML = '';
+
+            const loans = DB.get('loans') || [];
+            const pendingLoans = loans.filter(l => l.status === 'pending');
+
+            if (pendingLoans.length === 0) {
+                loansContainer.innerHTML = '<div class="text-muted" style="font-size: 11px;">Tidak ada permohonan pinjaman pending.</div>';
+            } else {
+                pendingLoans.forEach(l => {
+                    const resident = users.find(u => u.id === l.resident_id);
+                    const rName = resident ? resident.name : 'Warga';
+                    
+                    const item = document.createElement('div');
+                    item.className = 'ticket-item';
+                    item.innerHTML = `
+                        <div class="ticket-header">
+                            <strong>Pinjaman #${l.id} - ${rName}</strong>
+                            <span class="badge badge-pending">Pending</span>
+                        </div>
+                        <div class="ticket-body">
+                            Jumlah: <strong>${formatRupiah(l.amount)}</strong><br>
+                            Tenor: <strong>${l.tenor_months} Bulan</strong><br>
+                            Tujuan: <em>"${l.purpose}"</em>
+                            <div class="admin-action-row">
+                                <button onclick="processLoanApproval(${l.id}, true)" class="btn btn-primary">Setujui & Transfer</button>
+                                <button onclick="processLoanApproval(${l.id}, false)" class="btn btn-danger">Tolak</button>
+                            </div>
+                        </div>
+                        <div class="ticket-meta">Diajukan: ${formatDate(l.created_at)}</div>
+                    `;
+                    loansContainer.appendChild(item);
+                });
+            }
+        }
+    } catch (e) {
+        console.error("Error loading admin data: ", e);
+        showToast("Gagal memuat data dasbor admin: " + e.message, "error");
     }
 }
 
